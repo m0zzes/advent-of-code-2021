@@ -25,6 +25,14 @@ class Grid:
         for i in range(0, h):
             self.data.append([init_char for i in range(0, w)])
 
+    @property
+    def height(self):
+        return len(self.data)
+
+    @property
+    def width(self):
+        return len(self.data[0])
+
     def at(self, x, y):
         return self.data[y][x]
 
@@ -39,6 +47,37 @@ class Grid:
     def set_line(self, line: Line, value):
         for point in line.coordinates:
             self.set(point[0], point[1], value)
+
+    def neighbours(self, x, y, diagonal: bool = False, exclude: list[str] = []) -> list[tuple[int,int,str]]:
+        """Returns a list of neighbours, their coordinates and values.
+        Diagonal tiles are not counted as neighbours by default.
+        Values/Walls/Collision-boxes can be excluded by using exclude list
+        """
+
+        result = []
+        for xn in [x - 1, x, x + 1]:
+            for yn in [y - 1, y, y + 1]:
+
+                # skip itself
+                if xn == x and yn == y:
+                    continue
+
+                # out-of-bounds
+                if xn < 0 or yn < 0 or xn >= len(self.data[0]) or yn >= len(self.data):
+                    continue
+
+                # skip diagonal-neighbours if not selected
+                if (not diagonal) and abs(x - xn) == 1 and abs(y - yn) == 1:
+                    continue
+
+                point = self.at(xn, yn)
+                if point in exclude:
+                    continue
+
+                result.append((xn,yn,point))
+
+        return result
+
 
     def flat(self) -> list[str]:
         """Returns the grid values in a flat format
