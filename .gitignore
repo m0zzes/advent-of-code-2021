@@ -1,3 +1,5 @@
 .venv
 *egg-info
 inputs
+__pycache__
+*.pyc

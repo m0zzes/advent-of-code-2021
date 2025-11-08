@@ -1,4 +1,5 @@
 import os
+import time
 from dataclasses import dataclass
 
 @dataclass
@@ -32,6 +33,15 @@ class Grid:
     @property
     def width(self):
         return len(self.data[0])
+
+    @property
+    def points(self) -> list[tuple[int, int, str]]:
+        points = []
+        for y in range(0, self.height):
+            for x in range(0, self.width):
+                points.append((x,y, self.at(x,y)))
+
+        return points
 
     def at(self, x, y):
         return self.data[y][x]
@@ -96,7 +106,24 @@ class Grid:
         for row in self.data:
             print("".join(row))
 
-    def interact(self, f):
+    def simulate(self, f, f_args, iterations: int, debug: bool = False, debug_sleep_s: float = 1) -> list[dict]:
+        """Simulates the grid, calling the passed function at each iteration.
+        Simulation function has to return a dictionary each state.
+        """
+
+        output = []
+        for i in range(0, iterations):
+
+            if debug:
+                time.sleep(debug_sleep_s)
+                os.system("clear")
+                self.print()
+
+            output.append( f(*f_args) )
+
+        return output
+
+    def interact(self, f, *f_args):
         """Interactive view, prints the grid in between function f calls
         """
 
@@ -110,4 +137,4 @@ class Grid:
             if c == 'q':
                 return
 
-            f() # Function call
+            f(*f_args) # Function call

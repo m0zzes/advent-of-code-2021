@@ -6,8 +6,9 @@ logger = logging.getLogger(__name__)
 class BaseProblem:
 
     def __init__(self, verbose: bool = False):
+        self.verbose = verbose
 
-        if verbose:
+        if self.verbose:
             log_level = logging.DEBUG
         else:
             log_level = logging.INFO
