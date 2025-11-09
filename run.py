@@ -9,6 +9,7 @@ from problems.day08.problem import Problem8
 from problems.day09.problem import Problem9
 from problems.day10.problem import Problem10
 from problems.day11.problem import Problem11
+from problems.day12.problem import Problem12
 
 if __name__ == "__main__":
     #Problem1(verbose=False).run("inputs/01.txt")
@@ -21,5 +22,5 @@ if __name__ == "__main__":
     #Problem8(verbose=False).run("inputs/08.txt")
     #Problem9(verbose=True).run("inputs/09.txt")
     #Problem10(verbose=True).run("inputs/10.txt")
-    Problem11(verbose=False).run("inputs/11.txt")
-    #Problem11(verbose=True).run("problems/day11/example.txt")
+    #Problem11(verbose=False).run("inputs/11.txt")
+    Problem12(verbose=True).run("inputs/12.txt")
