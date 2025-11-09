@@ -43,6 +43,21 @@ class Grid:
 
         return points
 
+    def new_row(self, y: int, init_char: str = "."):
+        new_row = [init_char for v in self.data[-1]]
+        self.data.insert(y, new_row)
+
+    def delete_row(self, y: int):
+        del self.data[y]
+
+    def new_column(self, x: int, init_char: str = "."):
+        for row in self.data:
+            row.insert(x, init_char)
+
+    def delete_column(self, x: int):
+        for row in self.data:
+            del row[x]
+
     def at(self, x, y):
         return self.data[y][x]
 
